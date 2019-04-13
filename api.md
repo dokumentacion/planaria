@@ -1444,3 +1444,87 @@ Some attributes that you may want to change sometimes:
 - **BITCOIN_PORT**: The Bitcoin JSON-RPC port. 
 - **PLANARIUM_PORT**: The Planarium HTTP API endpoint port. By default it's 3000.
 - **JOIN**: `true` for joining Planaria Network. `false` for not joining.
+
+---
+
+# Troubleshoot
+
+Something not working? Here are the steps you could take to diagnose the problem
+
+## How to check online containers
+
+Run `docker ps` to see the currently running Docker containers.
+
+In most cases it should return two. Should look something like this: 
+
+```
+root@eul:~/euler# docker ps -a
+CONTAINER ID        IMAGE                     COMMAND                  CREATED             STATUS              PORTS                                                                                       NAMES
+9ea4dd8d6b75        interplanaria/planarium   "/app/entrypoint.sh"     3 days ago          Up 3 days           0.0.0.0:3000->3000/tcp                                                                      planarium_planarium_1
+dcb3241a81e0        interplanaria/planaria    "/planaria/entrypoin…"   3 days ago          Up 3 days           0.0.0.0:28337->28337/tcp, 127.0.0.1:27017->27017/tcp, 28332/tcp, 0.0.0.0:28339->28339/tcp   planaria_planaria_1
+root@eul:~/euler#
+```
+
+If only one is running (in most of these cases it would be only `interplanaria/planaria` running, because the planarium container will crash when the planaria container crashes), we should inspect the container to see what went wrong.
+
+## How to view crash logs
+
+As of the latest version of [Planaria Computer](/pc) you can view the logs of crashed containers.
+
+- If your Planaria container is not up, you can check the log with `pc logs write` to see what's going on
+- If your Planarium container is not up, you can check the log with `pc logs read` to see what's going on
+
+If Planaria is running, but Planarium is failing, it has to do with the API endpoint.
+
+If both Planaria and Plarium are not running, it means the Bitcoin-interfacing part is failing. This may have to do with:
+
+- Failure to connect to Bitcoin JSON-RPC
+- Failure to store to the containerized MongoDB inside Planaria
+
+## How to diagnose JSON-RPC problems
+
+### Check JSON-RPC
+
+If the Planaria container is failing to fetch from Bitcoin, there can be multiple causes:
+
+First, check that your `bitcoin-cli` itself is working. If this is not working, then you first need to get this sorted out even before starting with Planaria.
+
+Try the following command:
+
+```
+bitcoin-cli getblockchaininfo
+```
+
+### Check Port Access
+
+If the `bitcoin-cli getblockchaininfo` is successful but you still have issue with Planaria reaching the Bitcoin node, it might be one of the following problems:
+
+1. **Firewall:** Check if you have a firewall set up which is blocking access to your Bitcoin port (`8332`).
+2. **Docker:** If you are running your Bitcoin node inside a Docker container, you need to make sure the Planaria container can reach the Bitcoin container. This is more of a cross-container communication problem than Planaria problem. Refer to https://www.google.com/search?q=docker+container+communication to get the correct `HOST` value. You can update the `.env` file to make sure Planaria container can reach into Bitcoin container.
+
+In the worst case, if you can't figure out running Bitcoin as a container, just run it without a container, it may be the easiet way to get around all this cross container problems.
+
+
+## How to diagnose Bitsocket problems
+
+If everything else is working, but you are not getting Bitsocket notifications correctly, it might have to do with Zeromq settings.
+
+Check your `bitcoin.conf` file to make sure you have the following lines correctly set:
+
+```
+# [ZeroMQ]
+# ZeroMQ messages power the realtime Planaria crawler
+# so it's important to set the endpoint
+zmqpubhashtx=tcp://123.456.789.001:28332
+zmqpubhashblock=tcp://123.456.789.001:28332
+```
+
+It's important to note that:
+
+1. The IP Address should be explicitly set to your HOST IP.
+2. It shouldn't use something like "localhost".
+
+
+## More Questions?
+
+If you have other troubles, please ask the question in the [chatroom](https://bitdb.network/atlantis)
