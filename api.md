@@ -554,13 +554,94 @@ For example,
 
 The easiest way to learn is by reading through existing machines:
 
-First, check out Bitstagram, which was explained above:
+Check out Bitstagram, which was explained above:
 
 <a href='https://bitstagram.bitdb.network' class='btn'>Bitstagram</a>
 
-Second, check out BASCIIAT, which takes a [B:](https://b.bitdb.network) image, and stores them as ASCII art (as a text file):
 
-<a href='https://basciiat.bitdb.network' class='btn'>BASCIIAT</a>
+### 6. File System API
+
+As explained in the last section, the [File Serve API](#_5-file-serve-api) gives you access to a **default public folder** named `assets/[Planaria Address]`.
+
+But many times you may want much more flexibility (customization, private file system, file based database, or any programmatic operation involving data persistence).
+
+And this is what the File System API provides: It lets you access the **ENTIRE file system** in which Planaria (for writing) and Planarium (for reading) operate.
+
+When you start a node with `pc start`, you will be presented with the following questionnaire where you can select any host folder that will map to the Planaria container file system (which exists inside the container at `/fs`)
+
+![planaria_fs](./planaria_fs.png)
+
+1. **The Entire File System:** In addition to the built-in MongoDB instance which acts as the backbone of Planaria, you can implement additional state storage by writing to and reading from files.
+2. **Flexible:** Unlike the file serve API which was limited to a single folder named assets and was public by default, the new file system interface is private by default, just like how a regular backend works. This means you can build a transparent backend without having to make everything public.
+3. **Build your own file serve API:** The flexibility allows for various models of backend privacy models. For starters, the new file system interface can be used to build as many file serve apis as you want. And it’s much more powerful because you can write your own custom file serve handler (The old file serve API was simple but not customizable).
+4. **Private File System:** Often you don’t want your files to be immediately accessible to public HTTP access. For example, you may be storing private keys. You may be storing 3rd party API keys that should not be exposed to the public. (Similar to how programmers never commit environment variables to version control systems like git) Or you may be storing a file-based-database, which exists as a blob of file and is meant to be accessed through a database query interface instead of accessing the raw file itself. So on and so on. By providing a private file system, you can build extremely flexible applications that still take full advantage of Bitcoin’s transparency (since all “commands” and “events” are Bitcoin transactions)
+
+#### What can you do with File System API?
+
+If you think about it, everything runs on a file. And all applications are just files, which make use of other files.
+
+Once you see it this way, you’ll realize that Planaria can be used to build all kinds of full fledged Bitcoin-powered computation backends.
+
+Below I’ve listed some interesting technologies that are all built on files just to help with imagination.
+
+![file_applications](./file_applications.png)
+
+- **Flat File Database:** You now have access to file-based databases such as LMDB.
+- **Keys:** Thanks to the default privacy model, you can even store Bitcoin keypairs, RSA keypairs, 3rd party API keys, or whatever key system you want to store in your backend, WITHOUT exposing them to public. This can be used for signing/verifying or encrypting/decrypting incoming data, or interacting with 3rd party APIs.
+- **Bitcoin Transactions:** You can even store unsigned Bitcoin transaction templates and use them in your computations and APIs. Stop here and dwell on this a bit.
+Version Control: Git is a file based version control system. Now you can store and update git (or similar systems) on Planaria.
+- **Artificial Intelligence Training Models:** You can store machine learning models on a Planaria node and train them through Bitcoin transactions. This could either start with an imported training model, or could start from scratch.
+- **3D Printing model files:** Store and update the 3d printing model over Planaria. And at some point you can even “commit” the change by making another transaction that uploads the up-to-date file.
+- **Code:** You can even create a state machine that not only updates its own state, but also updates the very state transition logic itself, implementing an “upgradeable” state machine powered by Bitcoin transactions.
+
+EVERYTHING IS A FILE.
+
+
+#### How to Use
+
+The folder structure for the Planaria file system is similarly sandboxed just like the File Serve API.
+
+Internally, Planaria creates a folder structure that looks like this:
+
+
+```
+/fs
+  /[Address for Planaria Machine1]
+  /[Address for Planaria Machine2]
+  /[Address for Planaria Machine3]
+```
+
+Note that this is an example of a heavy use case, and in many cases you would be running just a single machine and there will be only one folder under `/fs`.
+
+But essentially, each Planaria machine has its own sandboxed filesystem. This is important because a Planaria node can run multiple machines simultaneously, and files from each machine shouldn’t spill over to another file system.
+
+Again, all you need to know is the current machine's file system sandboxed root path is passed in through a variable named `m.fs.path`, through event handlers `onmempool`, `onblock`, `oncreate`, `onrestart`.
+
+For example if you want to create a folder named `/c` you simply need to do:
+
+```
+mkdir(m.fs.path + "/c")
+```
+
+And just like the file serve API, the file system is shared across Planaria and Planarium containers. So you can WRITE state from Planaria, and make use of the state from Planarium.
+
+Here’s a more concrete example usage of this m.fs.path variable:
+
+```
+module.exports = {
+  onmempool: function(m) {
+    // create a folder named /c/[hash] under the root file system
+    fs.writeFile(m.fs.path + "/c/" + hash, buf, function(er) {
+      ...
+    })
+    ...
+  }
+}
+```
+
+- **Private by default:** By default, the files stored under the `/fs` file system are private, just like any other backends. For many types of files you probably may not want to expose them all to public. For example, there is no value in exposing the file folder for a file based database because it would just be an unreadable blob.
+- **Expose to Public HTTP endpoint through router:** However you can make any subfolder public just like the File Serve API. You can expose the folders to public inside Planarium.js through its router feature.
+
 
 ---
 
