@@ -224,7 +224,7 @@ You can implement the event handler by making use of the machine objct that gets
 
 The `m` variable consists of two attributes:
 
-- `input`: The incoming transaction event object
+- `input`: The incoming transaction event object in [TXO format](https://github.com/interplanaria/txo)
 - `state`: The CRUD API object
 - `output`: The publish API
 
@@ -232,6 +232,10 @@ You can use the `input` to derive any data, and write it the `state` object thro
 
 
 #### onblock
+
+Each block contains `block info`, `block items`, and the `mempool snapshot` at the time the block is produced.
+
+Each block item (under `input.block.items`) is formatted as [TXO format](https://github.com/interplanaria/txo)
 
 ```
 {
