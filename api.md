@@ -1314,3 +1314,133 @@ The best way to learn is by checking out some existing nodes.
 You can find them on Planaria Network:
 
 <a href='https://planaria.network' class='btn'>Planaria Network</a>
+
+
+---
+
+# Advanced
+
+## Diving into Containers
+
+Many times you may want to **dive into the containers** to see what exactly is going on. We can connect directly into the Planaria and Planarium docker containers through shell command.
+
+With this you can do things like:
+
+1. Inspect the files inside to make sense of things
+2. Inspect the MongoDB and the entire file system like a normal shell connection
+
+Here's how:
+
+### Step 1. Find containers
+
+Run the following command to discover ALL containers (Even the dead ones):
+
+```
+docker ps -a
+```
+
+The command will display something like this:
+
+```
+root@eul:~/euler# docker ps -a
+CONTAINER ID        IMAGE                     COMMAND                  CREATED             STATUS              PORTS                                                                                       NAMES
+9ea4dd8d6b75        interplanaria/planarium   "/app/entrypoint.sh"     3 days ago          Up 3 days           0.0.0.0:3000->3000/tcp                                                                      planarium_planarium_1
+dcb3241a81e0        interplanaria/planaria    "/planaria/entrypoin…"   3 days ago          Up 3 days           0.0.0.0:28337->28337/tcp, 127.0.0.1:27017->27017/tcp, 28332/tcp, 0.0.0.0:28339->28339/tcp   planaria_planaria_1
+root@eul:~/euler#
+```
+
+Pay attention to the `CONTAINER ID` column. The container ids are:
+
+- Planaria: `9ea4dd8d6b75`
+- Planarium: `dcb3241a81e0`
+
+### Step 2. Connect to Shell
+
+Now that we know the container ids, we can run `bash` into the containers through the following command:
+
+```
+docker exec -it [CONTAINER ID] bash
+```
+
+To connect to planaria from above example we would run:
+
+```
+docker exec -it 9ea4dd8d6b75 bash
+```
+
+To connect to planarium from above example:
+
+```
+docker exec -it dcb3241a81e0 bash
+```
+
+## Advanced Logging
+
+By default, the `pc logs write` and `pc logs read` starts **listening to the log** from the containers. However sometimes you may want more flexibility. You can directly use docker logs by figuring out the container ID [as explained above](#step-1-find-containers)
+
+Once you figure out the container ID, you can run to many things:
+
+### 1. Get full log
+
+```
+docker logs [CONTAINER ID]
+```
+
+### 2. Follow log
+
+```
+docker logs -f [CONTAINER ID]
+```
+
+### 3. Get the last 100 lines
+
+```
+docker logs [CONTAINER ID] --tail 100
+```
+
+### 4. Follow log, starting from the last 100 lines
+
+```
+docker logs -f [CONTAINER ID] --tail 100
+```
+
+> This is equivalent to "pc logs write 100" or "pc logs read 100"
+
+
+## Custom Environment Variables
+
+The [Planaria Computer](/pc) takes care of most use cases but sometimes you may want to customize the environment variables for Planaria and Planarium containers.
+
+For this you can manually update the `.env` file inside the root folder.
+
+The `.env` file is empty until you run the node for the first time with `pc start`.
+
+Then the `pc start` command will fill out the initial default values, which will look something like this:
+
+```
+DOMAIN=http://123.456.780.012:3000
+PLANARIUM_PORT=3000
+JOIN=false
+ADDRESS=13Q2RdxNQRYaPotZxJ64yZbWuHrpVwut1Z
+HOST=104.248.166.230
+DATA_DIR=./db
+ASSETS_DIR=./assets
+FS_DIR=./fs
+MAX_MEMORY=7.5
+BITCOIN_USER=root
+BITCOIN_PASSWORD=bitcoin
+FAT=false
+PLANARIA=interplanaria/planaria
+PLANARIUM=interplanaria/planarium
+```
+
+You can manually update these attributes to customize your node.
+
+Some attributes that you may want to change sometimes:
+
+- **BITCOIN_USER**: The JSON-RPC username. Must match the `rpcuser` attribute in `bitcoin.conf`.
+- **BITCOIN_PASSWORD**: The JSON-RPC password. Must match the `rpcpassword` attribute in `bitcoin.conf`.
+- **HOST**: Bitcoin HOST IP address. Used for Bitcoin ZeroMQ and Bitcoin JSON-RPC used by Planaria and Planarium.
+- **BITCOIN_PORT**: The Bitcoin JSON-RPC port. 
+- **PLANARIUM_PORT**: The Planarium HTTP API endpoint port. By default it's 3000.
+- **JOIN**: `true` for joining Planaria Network. `false` for not joining.
