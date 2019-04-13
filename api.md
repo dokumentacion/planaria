@@ -640,7 +640,7 @@ module.exports = {
 ```
 
 - **Private by default:** By default, the files stored under the `/fs` file system are private, just like any other backends. For many types of files you probably may not want to expose them all to public. For example, there is no value in exposing the file folder for a file based database because it would just be an unreadable blob.
-- **Expose to Public HTTP endpoint through router:** However you can make any subfolder public just like the File Serve API. You can expose the folders to public inside Planarium.js through its router feature.
+- **Expose to Public HTTP endpoint through router:** However you can make any subfolder public just like the File Serve API. You can expose the folders to public inside Planarium.js through its [custom routes feature](#custom-routes).
 
 
 ---
@@ -856,6 +856,8 @@ Planarium is the **interface through which the outside world can read Planaria**
 
 ## Anatomy of a Planarium
 
+### Syntax
+
 Every Planarium Service is a **Single node.js module object** that follows the following convention:
 
 ```
@@ -882,12 +884,13 @@ module.exports = {
 
 - `planarium`: planarium version. currently '0.0.1'.
 - `query`: the HTTP API description
-	- `web`: The default query to display in the explorer
-	- `api`: The HTTP API configuration
-		- `timeout`: how many milliseconds to wait before timing out a query
-		- `sort`: The default sort order of a query
-		- `concurrency`: The default level of concurrency allowed for certain queries (So far only supports `aggregate`)
-	- `log`: logging option (verbose if true)
+  - `web`: The default query to display in the explorer
+  - `api`: The HTTP API configuration
+    - `timeout`: how many milliseconds to wait before timing out a query
+    - `sort`: The default sort order of a query
+    - `concurrency`: The default level of concurrency allowed for certain queries (So far only supports `aggregate`)
+    - `routes`: Custom routes definition (More on custom routes below)
+  - `log`: logging option (verbose if true)
 - `socket`: The SSE endpoint configuration
 	- `web`: The default query to subscribe to in the socket explorer
 	- `api`: doesn't do anything for now. reserved.
@@ -896,7 +899,7 @@ module.exports = {
     - `request`:  a function to transform incoming [Bitquery](https://docs.bitdb.network/docs/query_v3) request into a different format, which then can be queried against the actual Planaria state machine database.
     - `response`: a function to transform the query result to present to the API consumer.
 
-## Example
+### Virtual Attributes
 
 In this example, we will use a 3rd party NPM module named `timeago.js` to transform the response automatically before returning. 
 
@@ -949,6 +952,58 @@ module.exports = {
 ```
 
 This is great for creating virtual attributes, but can be much more powerful for doing things like: Storing data without modification but returning a transformed result depending on the query
+
+
+### Custom Routes
+
+By default, every Planaria microservice has two powerful built-in API endpoints:
+
+1. **Bitquery:** An HTTP endpoint (located at /q) for querying the blockchain using a Turing complete portable query language written in JSON, also named “Bitquery”.
+2. **Bitsocket:** A [server-sent-events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events) endpoint for programmable push notifications API (located at `/s`) that lets you listen to very specific patterns of Bitcoin transactions using the same Bitquery query language.
+
+Thanks to the expressive nature of the [Bitquery query language](https://docs.planaria.network/#/query), you can make all kinds of powerful queries into the Bitcoin blockchain just with these two APIs.
+
+However, in addition to the two default endpoints, you can create your **own custom additional endpoints** through `planarium.js`.
+
+![planaria_router](./planaria_router.png)
+
+> Note: Only GET requests are allowed because ONLY Bitcoin can write to Planaria. If you want to write to Planaria, you don’t make a POST or PUT request to Planaria node itself. Instead you “post” by making a Bitcoin transaction.
+
+You can define custom routes under `query.api.routes` inside `planarium.js`.
+
+Here's what a router definition looks like:
+
+![planaria_router_code](./planaria_router_code.png)
+
+Internally, the Planarium API endpoint is powered by express.js, and the routes are [directly mapped to the native GET handlers for express.js](https://expressjs.com/en/4x/api.html#app.get).
+
+In this example we’re defining a `GET /c/:id` endpoint which will automatically map to the following URL:
+
+```
+https://[HOST_PATH]/[PLANARIA_MACHINE_ADDRESS]/c/[id]
+```
+
+Here’s an actual example of what this may look like:
+
+```
+https://data.bitdb.network/1KuUr2pSJDao97XM8Jsq8zwLS6W1WtFfLg/c/....
+```
+
+> Note: You can add as many route handlers as you want!
+
+All Planaria endpoint URLs are prefixed by its machine address. Each machine is uniquely identified by its Bitcoin address (instead of its host HTTP URL). This is how Planaria ensures application portability.
+
+Because the machines are identified by the Bitcoin address and NOT the host’s HTTP URL, all Planaria state machines are independent from whichever host they’re being served from, and independent from the server-client based HTTP scheme. It’s Bitcoin native.
+
+The same machine, when run by another host, would look something like this, for example:
+
+```
+https://files.bitdb.network/1KuUr2pSJDao97XM8Jsq8zwLS6W1WtFfLg/c/....
+```
+
+They would have EXACTLY the same state as the other endpoint because they’re constructed from the same code.
+
+
 
 ## Learn More
 
