@@ -472,9 +472,9 @@ However, sometimes you may want to let Planaria read/write static files and serv
 
 And **This** is File Serve API, powered by [Docker Volumes](https://docs.docker.com/storage/volumes/)
 
-1. [Planaria](https://docs.planaria.network/#/api?id=planaria-api) and [Planarium](https://docs.planaria.network/#/api?id=planarium-api) each has a shared folder at path `public/assets` **inside each container**. This is also available outside of the container at `assets` folder. ([Learn more about how Docker volumes work](https://docs.docker.com/storage/volumes/))
-2. This means, if you write to the `public/assets` path from Planaria, it will be instantly available to serve over HTML at `public/assets` through Planarium API endpoint.
-3. The assets are automatically available at the URL `/assets/[filename]` if you store to `public/assets`.
+1. [Planaria](https://docs.planaria.network/#/api?id=planaria-api) and [Planarium](https://docs.planaria.network/#/api?id=planarium-api) each has a shared folder at path `public/assets/[Planaria Machine Address]` **inside each container**. This is also available outside of the container at `assets/[Planaria Machine Address]` folder. ([Learn more about how Docker volumes work](https://docs.docker.com/storage/volumes/))
+2. This means, if you write to the `public/assets/[Planaria Machine Address]` path from Planaria, it will be instantly available to serve over HTTP at `/assets/[Planaraia Machine Address]/[filename]` through Planarium API endpoint.
+3. Note that the assets folders are **sandboxed under Planaria Machine address** (`/assets/[Planaria Machine Address]/[filename]`). This allows you to run multiple Planaria machines on a same node without worrying about the files spilling over to another machine's territory.
 
 Here's what the directory structure looks like from the host machine (The `assets` folder will exist as `public/assets` inside Planaria and Planarium containers):
 
@@ -483,14 +483,14 @@ Here's what the directory structure looks like from the host machine (The `asset
 
 #### How to Write
 
-The `onmempool`, `onblock`, `onrestart` handlers all pass in a string under `m.assets.path`, which is the designated path for the current state machine assets. 
+The explanation above makes it sound complicated but as a developer all you need to remember is the `m.assets.path` variable that gets passed in through `onmempool`, `onblock`, `onrestart` event handlers.
 
-> This is conventional and you can theoretically write to any path, but it is recommended that you use the designated path in order to avoid filename collision among multiple state machines running concurrently on the same node
+The `m.assets.path` contains the designated path for the static file serve folder for the **current Planaria machine**, sandboxed under the Planaria machine address.
 
 Here's an example: [Bitstagram](https://bitstagram.bitdb.network), which:
 
 1. listens to [B://](https://b.bitdb.network) protocol transactions
-2. Parses incoming transactions into file and writes to `public/assets/1BvPxwDoz6DR9qedZrKJjWio6Gm7UCPGXU/raw` folder (utilizing the namespaced `m.assets.path` value which contains the designated assets folder path for the current state machine)
+2. Parses incoming transactions into file and writes to `public/assets/1BvPxwDoz6DR9qedZrKJjWio6Gm7UCPGXU/raw` folder (utilizing the namespaced `m.assets.path` value which contains the designated assets folder path `public/assets/1BvPxwDoz6DR9qedZrKJjWio6Gm7UCPGXU` for the current state machine)
 3. Uses [Jimp](https://github.com/oliver-moran/jimp) to transform the images with different filters (`blur`, `sepia`, `pixel`)
 4. Then write the transformed files **(4 variations per original file)** to corresponding paths
 
@@ -499,13 +499,12 @@ Here's an example: [Bitstagram](https://bitstagram.bitdb.network), which:
 const jimp = require('jimp')
 const mkdir = require('make-dir');
 const fs = require('fs');
-const KEY = '1BvPxwDoz6DR9qedZrKJjWio6Gm7UCPGXU';
 
 module.exports = {
   planaria: '0.0.1',
   from: 566470,
   name: 'Bitstagram',
-  address: KEY,
+  address: '1BvPxwDoz6DR9qedZrKJjWio6Gm7UCPGXU',
   version: '0.0.1',
   description: 'photo filter app for B protocol',
   ...
@@ -547,7 +546,7 @@ There's really nothing else to do! Just open the browser and open the following 
 
 For example,
 
-1. If you wrote to `public/assets/1BvPxwDoz6DR9qedZrKJjWio6Gm7UCPGXU/image.png` from Planaria, 
+1. If you wrote to `m.assets.path + "/image.png"` from Planaria.js,
 2. And your node root URL was `https://lol.bitdb.network`,
 3. The same image will be instantly available through HTTP at `https://lol.bitdb.network/assets/1BvPxwDoz6DR9qedZrKJjWio6Gm7UCPGXU/image.png`
 
@@ -562,7 +561,6 @@ First, check out Bitstagram, which was explained above:
 Second, check out BASCIIAT, which takes a [B:](https://b.bitdb.network) image, and stores them as ASCII art (as a text file):
 
 <a href='https://basciiat.bitdb.network' class='btn'>BASCIIAT</a>
-
 
 ---
 
