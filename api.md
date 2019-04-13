@@ -50,7 +50,8 @@ module.exports = {
   index: { ... },
   onmempool: async function(m) { ...  },
   onblock: async function(m) { ...  },
-  onrestart: async function(m) { ...  }
+  onrestart: async function(m) { ...  },
+  oncreate: async function(m) { ...  }
 }
 ```
 
@@ -66,6 +67,7 @@ Here's what each attribute represents:
 - `onmempool`: an event handler for handling realtime mempool transactions
 - `onblock`: an event handler for handling new block events
 - `onrestart`: an event handler for when the state machine restarts (used to do cleanup, etc. for handling unexpected crashes or restarts)
+- `oncreate`: the event handler that gets triggered EXACTLY once when the state machine starts for the first time (This is determined by the machine clock. `oncreate` is triggered when the machine's clock is the same as the `from` attribute. This means once the crawler starts progressing, the clock will become larger than the `from` attribute and `oncreate` will not be triggered.
 
 
 ## API
@@ -192,6 +194,7 @@ There are three types of events:
 1. `onmempool`: new realtime mempool transaction
 2. `onblock`: new block event, including all the transactions
 3. `onrestart`: triggered when the node restarts. important for cleaning up before restart crawling.
+4. `oncreate`: triggered EXACTLY ONCE at the beginning of the machine's life.
 
 #### onmempool
 
@@ -333,6 +336,14 @@ Useful for when a node gets shut down unexpectedly.
   }
 }
 ```
+
+#### oncreate
+
+Triggered exactly once when the node starts for the first time. (Only when the machine clock `m.clock.machine.now` is equal to the `from` attribute).
+
+Here's an example:
+
+![planaria_oncreate](./planaria_oncreate.png)
 
 
 ### 3. State API
@@ -890,6 +901,7 @@ module.exports = {
     - `sort`: The default sort order of a query
     - `concurrency`: The default level of concurrency allowed for certain queries (So far only supports `aggregate`)
     - `routes`: Custom routes definition (More on custom routes below)
+    - `oncreate`: Initializer function that gets called once every time Planarium starts (or restarts)
   - `log`: logging option (verbose if true)
 - `socket`: The SSE endpoint configuration
 	- `web`: The default query to subscribe to in the socket explorer
@@ -1003,6 +1015,16 @@ https://files.bitdb.network/1KuUr2pSJDao97XM8Jsq8zwLS6W1WtFfLg/c/....
 
 They would have EXACTLY the same state as the other endpoint because they’re constructed from the same code.
 
+
+### Initializer
+
+Unlike Planaria.js `oncreate` initializer which is run exactly once when the machine is run for the first time, Planarium.js `oncreate` is run **every time** Planarium endpoint container restarts.
+
+Here’s an example planarium.js setting (see under `query.api.oncreate`)
+
+![planarium_router_code](./planarium_router_code.png)
+
+This `oncreate` handler will be triggered every time the container starts/restarts.
 
 
 ## Learn More
