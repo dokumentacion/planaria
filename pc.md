@@ -20,6 +20,8 @@ Planaria Computer is an NPM Package. You can install it globally by running:
 npm install -g planaria
 ```
 
+
+
 ---
 
 # User Commands
@@ -44,7 +46,26 @@ pc ls user
 
 # Machine Commands
 
+
+> IMPORTANT: ALL commands in this section (except for `pc push`) MUST be run from the root folder. [Learn more about the app folder structure](#app-structure)
+
+
+
 ## 1. new
+
+### Prerequisite
+
+Before creating a new node, you need to create a host folder.
+
+```
+mkdir app
+```
+
+Then cd into the folder
+
+```
+cd app
+```
 
 ### genesis
 
@@ -303,6 +324,32 @@ pc update
 
 ---
 
+# App Structure
+
+If you are running multiple Planaria state machines on the same node, you need to make sure you structure the code properly.
+
+- There is a root folder named `genes`
+- Each machine has its own address space under the `genes` folder, identified by its unique Bitcoin address.
+- When you run a node with multiple genes, it will execute the `planaria.js` code for every gene it contains.
+
+
+Here's the folder structure:
+
+
+![genes](./genes.png)
+
+
+**This means ALL the `pc` commands from above MUST be run from the root folder.**
+
+
+For example, if you run `pc new machine` multiple times from the root folder, you will find that your `genes` folder will have gained multiple genes, all identified with a unique Bitcoin address.
+
+Also, if you pull from the planaria network, you can do `pc pull [Address]` from the **root folder**. This will also update the `genes` folder.
+
+> The ONLY exception for `pc` command execution is when you push to the [planaria.network](https://planaria.network) registry. In this case you run `pc push` from the actual gene folder you want to push.
+
+---
+
 # Reset the Entire Node
 
 Sometimes you may want to reset the entire node and start over. In this case you can try the following:
@@ -325,4 +372,14 @@ Third, delete the volume. If you were using `./db` to store the Planaria state, 
 rm -rf ./db
 ```
 
+Delete the File Serve API folder and File System API folder.
+
+Assuming we've been storing them under `./assets` and `./fs`,
+
+```
+rm -rf ./assets
+rm -rf ./fs
+```
+
 ---
+
