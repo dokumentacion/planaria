@@ -1,6 +1,6 @@
-# Query Language
+# Bitquery
 
-Planaria comes with a portable programmable query language called Bitquery:
+Planaria comes with **a portable programmable query language** called Bitquery:
 
 ![bitquery](bitquery.png)
 
@@ -363,3 +363,5 @@ socket.onmessage = function(e) {
 </body>
 </html>
 ```
+
+> You can learn more about the Socket feature here: [Learn Bitsocket](/socket)

@@ -190,7 +190,7 @@ Learn More about the Query Language:
 
 Learn More about Bitsocket (The SSE API)
 
-<a href='https://bitsocket.org/' class='btn'>Learn Bitsocket</a>
+<a href='/#/socket' class='btn'>Learn Bitsocket</a>
 
 
 Learn More about some notable Planaria nodes:

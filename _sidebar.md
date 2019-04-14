@@ -5,6 +5,7 @@
 * [Guide](guide.md)
 * [Planaria Computer](pc.md)
 * [Planaria Network](network.md)
-* [Query Language](query.md)
+* [Bitquery](query.md)
+* [Bitsocket](socket.md)
 * [Node API](api.md)
 * [Contribute](contribute.md)
