@@ -67,7 +67,7 @@ Then cd into the folder
 cd app
 ```
 
-### genesis
+### create a genesis machine
 
 To try a default Planaria which contains all the available attributes, generate a new machine with:
 
@@ -75,7 +75,7 @@ To try a default Planaria which contains all the available attributes, generate 
 pc new genesis
 ```
 
-### machine
+### create an empty machine
 
 Create an empty new project with:
 
@@ -86,6 +86,23 @@ pc new machine
 You will be presented with a short questionnaire.
 
 Once you finish the questionnaire, the command will auto-generate all the files required to run a planaria node:
+
+### Store your keys
+
+When you create your machine, an `.env` file will be created under the gene folder (The same folder where the `planaria.js` and `planarium.js` exist)
+
+The `.env` file will contain:
+
+- the generated Bitcoin Address
+- public key
+- private key
+
+Make sure to open the `.env` file, copy and store it somewhere else as well, just in case.
+
+The private key is what proves you own the Planaria machine code, so if you lose the private key, there's no way to prove you created the machine.
+
+> Note: Each gene folder contains its own `.env` file, which means you will have multiple `.env` files if you run multiple Planaria machines under the same node.
+
 
 Now you're ready to start!
 
