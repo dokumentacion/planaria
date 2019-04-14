@@ -3,6 +3,7 @@
 * [Quickstart](quickstart.md)
 * [Use Cases](use.md)
 * [Guide](guide.md)
+* [Tutorials and Articles](tutorials.md)
 * [Planaria Computer](pc.md)
 * [Planaria Network](network.md)
 * [Bitquery](query.md)
