@@ -10,7 +10,6 @@
 
 ### Articles
 
-- Bitsocket: https://medium.com/@_unwriter/bitsocket-e7feb4f837ad
 - How the "l" attributes work for serializing large pushdata: https://medium.com/@_unwriter/l-is-for-large-6e632280c5e3
 - Planaria File Serve API: https://medium.com/@_unwriter/planaria-file-serve-api-30f8ea4865ef
 - Planaria Systems Programming Interface: Including Initializers, File System, and Custom Routers https://medium.com/@_unwriter/planaria-systems-programming-interface-e9db226012d5
