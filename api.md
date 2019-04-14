@@ -1525,6 +1525,37 @@ It's important to note that:
 2. It shouldn't use something like "localhost".
 
 
+## Running Planarium behind a Proxy
+
+There are a couple of things to keep in mind when you run your Planarium API endpoint behind Nginx, Apache, etc. 
+
+
+
+- **SSE Settings:** Bitsocket (Server Sent Events) connections may time out if you don't have the proper settings. [Read more](https://www.electrollama.net/blog/2017/6/22/html-sse-with-nodejs-and-nginx)
+- **Long URL Support:** The query endpoint is based on base64 encoded query string, and sometimes the query string may be very large, resulting in failures. You may want to set the `client_header_buffer_size` and `large_client_header_buffers` attributes.
+
+Here's an example setting for an Nginx `/etc/nginx/sites-enabled/eul.bitdb.network`.
+
+```
+server {
+  server_name eul.bitdb.network;
+
+  client_header_buffer_size 64k;
+  large_client_header_buffers 8 64k;
+
+  location / {
+    proxy_pass http://localhost:3000;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+  }
+}
+```
+
+
+
 ## More Questions?
 
 If you have other troubles, please ask the question in the [chatroom](https://bitdb.network/atlantis)
