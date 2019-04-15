@@ -17,7 +17,7 @@ Planarium is the **interface through which the outside world can read from Plana
 
 ## Anatomy of a Planarium
 
-Every Planarium Service is a **Single node.js module object** that follows the following convention:
+Every Planarium Service is a **Single Node.js module object** that follows the following convention:
 
 ```
 module.exports = {

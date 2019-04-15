@@ -4,8 +4,8 @@ The paradigm shift about Planaria's approach to building apps on top of Bitcoin 
 
 The backend operator (Planaria node operators) acts as a utility provider, instead of having control over your data. This is because:
 
-1. Everything on Planaria is derived from Bitcoin data
-2. The application logic itself is transparently published
+1. Everything on Planaria is derived from Bitcoin data.
+2. The application logic itself is transparently published.
 
 With this in mind, here are the options:
 
@@ -243,7 +243,7 @@ You will see two containers starting up:
 
 ## 4. Use the Machine
 
-Now we're all ready! Let's open up the browser and check. There are two buttons. 
+Now we're all ready! Let's open up the browser and check. There are two buttons.
 
 ### HTTP[S] Explorer
 

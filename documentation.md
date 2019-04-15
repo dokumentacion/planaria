@@ -4,8 +4,8 @@ The paradigm shift about Planaria's approach to building apps on top of Bitcoin 
 
 The backend operator (Planaria node operators) acts as a utility provider, instead of having control over your data. This is because:
 
-1. Everything on Planaria is derived from Bitcoin data
-2. The application logic itself is transparently published
+1. Everything on Planaria is derived from Bitcoin data.
+2. The application logic itself is transparently published.
 
 With this in mind, here are the options:
 
@@ -29,7 +29,7 @@ To access Planaria, let's start by installing the Planaria Computer, a utility t
 
 ### 1. Install Planaria Computer
 
-PC (Short for "Planaria Computer") is the command line utility for interfacing with Planaria. 
+PC (Short for "Planaria Computer") is the command line utility for interfacing with Planaria.
 
 <div class='center'>
 <img class='fixed-height' src='icon.png'>
@@ -45,7 +45,7 @@ npm install -g planaria
 
 With Planaria there is no "API Key" issued to you from a central admin. Instead you create an "account" by **generating a Bitcoin address key pair**.
 
-The generated accoount (Bitcoin address) is your (decentralized) API key.
+The generated account (Bitcoin address) is your (decentralized) API key.
 
 
 Let's create an account with PC:
@@ -66,8 +66,8 @@ Also if you look inside the file, you'll see that it stores both public key AND 
 
 These address/public key/private key attributes don't do much at the moment (You just need to set the address as the header), but in the future will be used to:
 
-1. pay the node operators for service.
-2. communicate with the node operators
+1. Pay the node operators for service.
+2. Communicate with the node operators.
 
 without a middleman.
 
@@ -76,7 +76,7 @@ without a middleman.
 
 ### 3. Connect to Planaria nodes
 
-You can coonnect to various Planaria nodes by making HTTP[s] requests with your key as the header.
+You can connect to various Planaria nodes by making HTTP[s] requests with your key as the header.
 
 Browser:
 
@@ -197,16 +197,16 @@ We can customize this later in the tutorial but for now lets just run the defaul
 pc start
 ```
 
-You will be asked whether to join the Planaria network or not. You can say "No" if you want to run privately. The default is "Yes" (The whole point of Planaria is **transparent swarm computing**, which means all backends should be transparent and reproduceable, so being public is important)
+You will be asked whether to join the Planaria network or not. You can say "No" if you want to run privately. The default is "Yes" (The whole point of Planaria is **transparent swarm computing**, which means all backends should be transparent and reproduceable, so being public is important).
 
 You will see two containers starting up:
 
-1. **Planaria:** The core crawler and indexer
+1. **Planaria:** The core crawler and indexer.
 2. **Planarium:** The HTTP + SSE (Server Sent Events) API endpoint for interacting with Planaria.
 
 [GIF]
 
-You can check the log with
+You can check the log with `pc logs read`.
 
 ### 4. Use the Machine
 
@@ -226,11 +226,11 @@ If you click the "socket" buttono, you'll be sent to a Bitsocket explorer
 
 Now that we've seen the default machine in action, let's try building our custom machine.
 
-See [Programming Planaria]() for details.
+See [Programming Planaria](api?id=planaria-api) for details.
 
 ### 6. Deploy the Machine to Planaria Network
 
-As mentioned, Planaria is ALL about transparecy.
+As mentioned, Planaria is ALL about transparency.
 
 Unlike traditional clouds, a service based on Bitcoin MUST be 100% open and transparent. Otherwise your users won't be able to trust you.
 
@@ -246,7 +246,7 @@ pc push
 
 ### 7. Run an Existing Planaria Machine
 
-Once a Planaria machine is stored on the planaria.network, anyone can easily pull and run it.
+Once a Planaria machine is stored on the [Planaria Network](https://planaria.network/), anyone can easily pull and run it.
 
 All you need to do is:
 
@@ -254,7 +254,7 @@ All you need to do is:
 pc pull [Address]
 ```
 
-You can find the planaria Address at the top of every planaria page
+You can find the planaria Address at the top of every planaria page.
 
 [image. screenshot]
 
@@ -281,4 +281,3 @@ Planaria Framework is made up of two components:
 ### 2. Build Planarium
 
 > **[2. Programming Planarium](api?id=planarium-api)**
-

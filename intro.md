@@ -14,7 +14,7 @@ This "motor" travels through time and collects all the events (**transactions**)
 
 ![blockchain](blockchain.gif)
 
-The rotation logic (Bitcoin's algorithm) is deterministic and secure (powered by Proof of Work), making it the perfectly stable piece of technology to power all kinds of useful machines. 
+The rotation logic (Bitcoin's algorithm) is deterministic and secure (powered by Proof of Work), making it the perfectly stable piece of technology to power all kinds of useful machines.
 
 
 ## Machine
@@ -72,7 +72,7 @@ We can build machines that:
 - never die, even when they are not alive.
 - can interact with one another in non-deterministic ways.
 - can interact with one another in combinations which even its original inventors never foresaw.
-- spawn other such machines without external intervention
+- spawn other such machines without external intervention.
 
 ![cat](cat.jpg)
 
@@ -91,7 +91,7 @@ There are many ways to describe what Planaria is, because it can mean different 
 
 ### 1. Bitcoin Application Framework
 
-Are you familiar with application frameworks like [Ruby on Rails](https://en.wikipedia.org/wiki/Ruby_on_Rails), [Django](https://en.wikipedia.org/wiki/Django_(web_framework)), [Laravel](https://en.wikipedia.org/wiki/Laravel), [Spring](https://en.wikipedia.org/wiki/Spring_Framework), etc.? 
+Are you familiar with application frameworks like [Ruby on Rails](https://en.wikipedia.org/wiki/Ruby_on_Rails), [Django](https://en.wikipedia.org/wiki/Django_(web_framework)), [Laravel](https://en.wikipedia.org/wiki/Laravel), [Spring](https://en.wikipedia.org/wiki/Spring_Framework), etc.?
 
 **Planaria is like these frameworks, but for Bitcoin, where you can write apps with nothing but JavaScript.**
 
@@ -104,7 +104,7 @@ Are you familiar with application frameworks like [Ruby on Rails](https://en.wik
 Because it's powered by Bitcoin, it has various unique traits we've never seen in traditional centralized cloud paradigm:
 
 1. **Transparent:** Because all data is derived from Bitcoin in a transparent manner, you can be sure that the resulting machine acts as designed. Furthermore, anyone can verify themselves by pulling and running a node, with just a few simple commands.
-2. **Portable:** All planaria machines are **containerized** and can be **published as a single portable node.js module**, which means anyone else can take the published code and run exactly the same state machine as you.
+2. **Portable:** All planaria machines are **containerized** and can be **published as a single portable Node.js module**, which means anyone else can take the published code and run exactly the same state machine as you.
 3. **Shareable:** There is no value in one organization owning an entire backend because everything is derived from public data and public algorithm transparently stored on Bitcoin. Backends can and will outlast the original creator.
 4. **Customizable:** There is no limit to how much you can customize Planaria. You can even mix it with external event producers and APIs to build a novel backend powered by Bitcoin.
 5. **User Friendly:** Unlike most nerdy tech that makes you jump through all kinds of hoops to implement "decentralization", Planaria lets you interact with Bitcoin like it's just a regular CRUD database with an HTTP API.
@@ -140,9 +140,9 @@ Every Planaria is a state machine, powered by Bitcoin.
 ![fsm](fsm2.png)
 
 - **Input:** An event listener that listens to realtime events and states from Bitcoin.
-- **Transition Logic:** A program that handles state transition (Using the CRUD API)
-- **State Memory:** A "memory" to persist and update the state (MongoDB)
-- **Output Logic:** An event producer that publishes custom programmable events for other modules and SSE
+- **Transition Logic:** A program that handles state transition (Using the CRUD API).
+- **State Memory:** A "memory" to persist and update the state (MongoDB).
+- **Output Logic:** An event producer that publishes custom programmable events for other modules and SSE.
 
 
 #### Input
@@ -151,7 +151,7 @@ The Planaria framework provides a set of API methods (`onmempool`, `onblock`, `o
 
 #### Transition Logic
 
-The Planaria framework provides a set of CRUD API methods that let you write state transition logic (`create`, `read`, `update`, `delete`) very easily, without you having to worry about all the behind-the-scenes details (such as bulk write operations)
+The Planaria framework provides a set of CRUD API methods that let you write state transition logic (`create`, `read`, `update`, `delete`) very easily, without you having to worry about all the behind-the-scenes details (such as bulk write operations).
 
 #### State Memory
 
@@ -166,18 +166,18 @@ This includes the `planarium` container which automatically turns the Zeromq pub
 
 ### 4. Infinite State Machine
 
-Here's the most powerful part about Bitcoin: You can **build eternal machines that are NOT bound by resources.**
+Here's the most powerful part about Bitcoin: You can **build eternal machines that are NOT bound by resources**.
 
 > **An entirely new class of application, only made possible through the very precise minimal architecture of Bitcoin, and Bitcoin only.**
 
 You can build machines that:
 
-1. Can simultaneously exist as multiple parallel states
+1. Can simultaneously exist as multiple parallel states.
 2. Don't have to be running and validating at all times, yet still exist forever.
 3. Can transcend time and space.
-3. Can spawn descendents and evolve.
+3. Can spawn descendants and evolve.
 
-As a thought experiment, let's imagine building a [Schrödinger's cat](https://en.wikipedia.org/wiki/Schr%C3%B6dinger%27s_cat) on Bitcoin. 
+As a thought experiment, let's imagine building a [Schrödinger's cat](https://en.wikipedia.org/wiki/Schr%C3%B6dinger%27s_cat) on Bitcoin.
 
 ![cat2](cat2.png)
 
@@ -216,14 +216,14 @@ In a traditional cloud model, one of the most important tasks the server provide
 
 With Bitcoin, the authentication is taken care of on the protocol level, on the edge. YOU have the keys to every single "API request" you make. This means we no longer need a central authority that stores and takes care of authentication & authorization details.
 
-**Thanks to the built-in signature in EVERY Bitcoin transaction, every "database entry" on Planaria is authenticated by default, in a SELF-CONTAINED manner.** 
+**Thanks to the built-in signature in EVERY Bitcoin transaction, every "database entry" on Planaria is authenticated by default, in a SELF-CONTAINED manner.**
 
 > **Applications no longer need a separate proprietary private authentication database.**
 
 ![decentral](decentralauth.png)
 
 > How Planaria fits into the picture:
-> 
+>
 > **Planaria doesn't deal with AUTH at all.** It assumes users will be interacting with Bitcoin through various great "WRITE" methods such as wallets or app frontends, and **focuses ONLY on the READ part**.
 
 ---
@@ -243,7 +243,7 @@ You can still READ through GET requests from HTTP endpoints, but this time, WRIT
 ![bm](bm.png)
 
 > How Planaria fits into the picture:
-> 
+>
 > **Planaria is READ ONLY**. The idea is that there will be all kinds of great contextual methods of WRITING to the blockchain, so Planaria stays minimal and only focuses on READ.
 
 
@@ -265,7 +265,7 @@ In either cases, the most important part--the state--is either thrown away or so
 The entire app state is public by default, and Planaria makes it easy to publish and deploy them in a matter of seconds. This means applications and their users don't have to worry about the destiny of the creator and maintainer.
 
 > How Planaria fits into the picture:
-> 
+>
 > **Planaria lets you write the types of apps described in this section**. All you need to do is write a Planaria node program, and deploy the code itself to the blockchain.
 
 ---
@@ -296,15 +296,15 @@ We can think of each Planaria node as **a pure math function that derives output
 
 Furthermore, once you upload even the Planaria node logic itself to the blockchain, we can achieve total transparency, because:
 
-1. The state machine code is public (Because it's stored on the blockchain)
-2. The state is public (becaust it's 100% derived from Bitcoin)
+1. The state machine code is public (Because it's stored on the blockchain).
+2. The state is public (because it's 100% derived from Bitcoin).
 3. Anyone can instantly pull, deploy, and run the node themselves to verify.
 
 ---
 
 ### Immortal Machines
 
-One problem with the centralized cloud model of application architecture is that **In the long run they are all dead.**
+One problem with the centralized cloud model of application architecture is that **In the long run they are all dead**.
 
 The destiny of an application is 100% dependent on the destiny of its host. Bitcoin gives us a way to change this, and Planaria implements it.
 

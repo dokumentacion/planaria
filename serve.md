@@ -109,7 +109,7 @@ pc push
 
 ## 7. Run an Existing Planaria Machine
 
-Once a Planaria machine is stored on the planaria.network, anyone can easily pull and run it.
+Once a Planaria machine is stored on the [Planaria Network](https://planaria.network/), anyone can easily pull and run it.
 
 All you need to do is:
 
@@ -125,4 +125,3 @@ Such ease of deploying and running someone else's machine is critical. It means 
 
 1. Even if the last person running the machine shuts it down, it's still not dead. Someone can pull the code 100 years from now and run it, and it will recreate the entire state by crawling the Bitcoin blockchain.
 2. Even if one node goes down, if there are other nodes running on the same transparent planaria code, the API consumers can easily migrate to this new node.
-

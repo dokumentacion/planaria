@@ -28,7 +28,7 @@ npm install -g planaria
 
 ## 1. new
 
-Create a new user
+Create a new user.
 
 ```
 pc new user
@@ -36,7 +36,7 @@ pc new user
 
 ## 2. ls
 
-List user accounts
+List user accounts.
 
 ```
 pc ls user
@@ -61,7 +61,7 @@ Before creating a new node, you need to create a host folder.
 mkdir app
 ```
 
-Then cd into the folder
+Then cd into the folder.
 
 ```
 cd app
@@ -285,7 +285,7 @@ pc push
 
 You must run the command inside the `genes/[ADDRESS]` folder, since you are pushing each "gene" to the registry, and not the entire node.
 
-> **NOTE: One node can run multiple "genes" (Planaria machines)**
+> **NOTE: One node can run multiple "genes" (Planaria machines).**
 
 
 ---
@@ -399,4 +399,3 @@ rm -rf ./fs
 ```
 
 ---
-

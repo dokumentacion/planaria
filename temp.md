@@ -20,7 +20,7 @@ Let's think of Bitcoin as a perpetual rotating machine, an infinity motor.
 
 ![bitcoin](bitcoin.gif)
 
-Each rotation is a Bitcoin block, and Bitcoin's job is to collect all the events (transactions) that happen through each rotation and take an immutable snapshot (a block). The rotation logic (Bitcoin's consensus model) is deterministic, making it a stable piece of technology to power all kinds of useful machines. 
+Each rotation is a Bitcoin block, and Bitcoin's job is to collect all the events (transactions) that happen through each rotation and take an immutable snapshot (a block). The rotation logic (Bitcoin's consensus model) is deterministic, making it a stable piece of technology to power all kinds of useful machines.
 
 - **Perpetual:** Because it's a circle, it rotates forever as long as there's fuel (Miner + User incentives)
 - **Deterministic:** Because the way it works is deterministic, it can be trusted enough to be used as the "motor" to power any machine, just like how the determinism of a real world motor makes it the building block for every single electric device out there.
@@ -67,9 +67,9 @@ Most computer applications (web app, mobile app, desktop app, or whatever) are i
 
 
 
-Mario is a "finite" state machine. 
+Mario is a "finite" state machine.
 
-1. **State:** Mario has 4 finite states: "Mario", "Fire Mario", "Super Mario", and "Cape Mario". 
+1. **State:** Mario has 4 finite states: "Mario", "Fire Mario", "Super Mario", and "Cape Mario".
 2. **Input:** It receives external input in the form of items (mushroom, feather, and flower)
 3. **Transition:** The game has a state transition algorithm. When Mario eats a mushroom he transitions into Super Mario.
 
@@ -77,12 +77,12 @@ Every application is a state machine. They keep some sort of state somewhere (da
 
 ## 4. What is an Infinite State Machine?
 
-It simply means 
+It simply means
 
 
 # What is Planaria?
 
-In the most basic form, Planaria lets you create your own custom state machine powered by Bitcoin. 
+In the most basic form, Planaria lets you create your own custom state machine powered by Bitcoin.
 
 ## 1. Planaria is a Bitcoin-powered backend
 
@@ -92,7 +92,7 @@ All you need to do is write a **transition function** (represented as f1, f2, f3
 
 ![overview](overview.png)
 
-These state machines will look just like a regular HTTP API, except that every event and database update is driven by Bitcoin transactions. 
+These state machines will look just like a regular HTTP API, except that every event and database update is driven by Bitcoin transactions.
 
 ## 2. Comparison with the "Cloud" model
 
@@ -102,18 +102,18 @@ In a cloud model,
 
 1. Users interact with the cloud through HTTP.
 2. Both "Read" and "Write" interactions are done through HTTP requests.
-3. The data is stored on a central cloud, and the application provider is the gateway to this data repostiory.
+3. The data is stored on a central cloud, and the application provider is the gateway to this data repository.
 4. Authentication is also carried out on the cloud side. User credentials are also stored on the cloud.
 
 ![cloud](cm.png)
 
 With Planaria,
 
-1. Instead of a centralized cloud server, everything is stored on the Bitcoin blockchain
+1. Instead of a centralized cloud server, everything is stored on the Bitcoin blockchain.
 2. Each planaria node acts as a filter, storing data in a format that's more application specific and easily queryable.
 3. Users "Write" by making Bitcoin transactions.
 4. Users "read" by connecting to planaria nodes for easy HTTP access.
-5. Authentication is built into the architecture because every write action is powered by a signed Bitcoin transaction. 
+5. Authentication is built into the architecture because every write action is powered by a signed Bitcoin transaction.
 
 ![bm](bm.png)
 
@@ -137,9 +137,6 @@ What does this mean in reality?
 
 1. You build a Bitcoin application using Planaria.
 2. Transparency: You publish your state machine publicly for transparency. Other users can verify themselves that your machine is working as advertised.
-3. 
+3.
 
 Let's say you created a Bitcoin application today powered by Planaria. You publish the gene the state machine for transparency. But after a while you decide that you don't want to run it anymore. In most cases, this will mean
-
-
-
