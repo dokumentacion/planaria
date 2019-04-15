@@ -28,7 +28,7 @@ Build apps that listen to certain patterns of transactions, and then trigger ano
 
 ####  4. App1 =>  Bitcoin => App2
 
-Create apps that communicate with one another through Bitcoin transactions. To communicate, App1 can send an immutable message to App2 by making a bitocin transaction, to which App2 is listening and triggers its own custom action in response. Like Inter-process calls (IPC), but for Bitcoin.
+Create apps that communicate with one another through Bitcoin transactions. To communicate, App1 can send an immutable message to App2 by making a bitcoin transaction, to which App2 is listening and triggers its own custom action in response. Like Inter-process calls (IPC), but for Bitcoin.
 
 ## How does it work?
 
@@ -83,7 +83,7 @@ bitsocket.onmessage = function(e) {
 
 ### 2. PORTABLE
 
-Notice from above code that, the `EventSource` is openinng a connection to a base64-encoded JSON query object
+Notice from above code that, the `EventSource` is opening a connection to a base64-encoded JSON query object
 
 ```
 {
@@ -145,7 +145,7 @@ Bitsocket uses the same query language for querying the Planaria database ([Bitq
 
 You can think of the query endpoint as a "pull" service, and the socket endpoint as a "push" service.
 
-You can use both in a single appplication to complement each other.
+You can use both in a single application to complement each other.
 
 
 ## Examples

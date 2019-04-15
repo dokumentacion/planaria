@@ -17,7 +17,7 @@ This page will walk you through how you can write a Planaria program.
 
 > Once you have built a Planaria, you will want to publish or run it.
 >
-> You can learn more about publishing, deploying, and running a Planaria program [here](/serve)
+> You can learn more about publishing, deploying, and running a Planaria program [here](/serve).
 
 
 ## Overview
@@ -27,9 +27,9 @@ This page will walk you through how you can write a Planaria program.
 ![fsm](fsm2.png)
 
 1. **Input:** An event listener that listens to realtime events from Bitcoin.
-2. **Transition Logic:** A program that handles state transition
-3. **State Memory:** A "memory" to persist and update the state
-4. **Output Logic:** An event producer that publishes custom programmable events for other modules
+2. **Transition Logic:** A program that handles state transition.
+3. **State Memory:** A "memory" to persist and update the state.
+4. **Output Logic:** An event producer that publishes custom programmable events for other modules.
 
 Planaria lets you express all of the above as a single portable JavaScript object.
 
@@ -37,7 +37,7 @@ Planaria lets you express all of the above as a single portable JavaScript objec
 
 ![anatomy](anatomy.png)
 
-Every Planaria state machine is a **SINGLE node.js module object** that follows the following convention:
+Every Planaria state machine is a **SINGLE Node.js module object** that follows the following convention:
 
 ```
 module.exports = {
@@ -148,7 +148,7 @@ The syntax:
 **Example 2:**
 
 - Two collections: `c` and `u`
-- Put index on `tx.h`, `blk.i`, ... 
+- Put index on `tx.h`, `blk.i`, ...
 - Ensure that `tx.h` is unique
 - Create a single full text index for each collection based on keys `out.s0`, `out.s1`, ...
 
@@ -191,16 +191,16 @@ The syntax:
 
 There are three types of events:
 
-1. `onmempool`: new realtime mempool transaction
-2. `onblock`: new block event, including all the transactions
+1. `onmempool`: new realtime mempool transaction.
+2. `onblock`: new block event, including all the transactions.
 3. `onrestart`: triggered when the node restarts. important for cleaning up before restart crawling.
 4. `oncreate`: triggered EXACTLY ONCE at the beginning of the machine's life.
 
 #### onmempool
 
-The `onmempool` method gets triggered whenver there's a new incoming mempool transaction.
+The `onmempool` method gets triggered whenever there's a new incoming mempool transaction.
 
-You can implement the event handler by making use of the machine objct that gets passed into the handler as argument.
+You can implement the event handler by making use of the machine object that gets passed into the handler as argument.
 
 ```
 {
@@ -436,9 +436,9 @@ await m.state.update({
 
 #### delete
 
-Delete all items that match certain MongoDB filter
+Delete all items that match certain MongoDB filter.
 
-This is especially handy inside `onrestart`, where you can use it to clean up any dangling documents since the last shutdown. 
+This is especially handy inside `onrestart`, where you can use it to clean up any dangling documents since the last shutdown.
 
 ```
 let res = await m.state.delete({
@@ -563,7 +563,7 @@ For example,
 
 1. If you wrote to `m.assets.path + "/image.png"` from Planaria.js,
 2. And your node root URL was `https://lol.bitdb.network`,
-3. The same image will be instantly available through HTTP at `https://lol.bitdb.network/assets/1BvPxwDoz6DR9qedZrKJjWio6Gm7UCPGXU/image.png`
+3. The same image will be instantly available through HTTP at `https://lol.bitdb.network/assets/1BvPxwDoz6DR9qedZrKJjWio6Gm7UCPGXU/image.png`.
 
 #### Learn More
 
@@ -588,7 +588,7 @@ When you start a node with `pc start`, you will be presented with the following 
 
 1. **The Entire File System:** In addition to the built-in MongoDB instance which acts as the backbone of Planaria, you can implement additional state storage by writing to and reading from files.
 2. **Flexible:** Unlike the file serve API which was limited to a single folder named assets and was public by default, the new file system interface is private by default, just like how a regular backend works. This means you can build a transparent backend without having to make everything public.
-3. **Build your own file serve API:** The flexibility allows for various models of backend privacy models. For starters, the new file system interface can be used to build as many file serve apis as you want. And it’s much more powerful because you can write your own custom file serve handler (The old file serve API was simple but not customizable).
+3. **Build your own file serve API:** The flexibility allows for various models of backend privacy models. For starters, the new file system interface can be used to build as many file serve APIs as you want. And it’s much more powerful because you can write your own custom file serve handler (The old file serve API was simple but not customizable).
 4. **Private File System:** Often you don’t want your files to be immediately accessible to public HTTP access. For example, you may be storing private keys. You may be storing 3rd party API keys that should not be exposed to the public. (Similar to how programmers never commit environment variables to version control systems like git) Or you may be storing a file-based-database, which exists as a blob of file and is meant to be accessed through a database query interface instead of accessing the raw file itself. So on and so on. By providing a private file system, you can build extremely flexible applications that still take full advantage of Bitcoin’s transparency (since all “commands” and “events” are Bitcoin transactions)
 
 #### What can you do with File System API?
@@ -604,7 +604,7 @@ Below I’ve listed some interesting technologies that are all built on files ju
 - **Flat File Database:** You now have access to file-based databases such as LMDB.
 - **Keys:** Thanks to the default privacy model, you can even store Bitcoin keypairs, RSA keypairs, 3rd party API keys, or whatever key system you want to store in your backend, WITHOUT exposing them to public. This can be used for signing/verifying or encrypting/decrypting incoming data, or interacting with 3rd party APIs.
 - **Bitcoin Transactions:** You can even store unsigned Bitcoin transaction templates and use them in your computations and APIs. Stop here and dwell on this a bit.
-Version Control: Git is a file based version control system. Now you can store and update git (or similar systems) on Planaria.
+- **Version Control:** Git is a file based version control system. Now you can store and update git (or similar systems) on Planaria.
 - **Artificial Intelligence Training Models:** You can store machine learning models on a Planaria node and train them through Bitcoin transactions. This could either start with an imported training model, or could start from scratch.
 - **3D Printing model files:** Store and update the 3d printing model over Planaria. And at some point you can even “commit” the change by making another transaction that uploads the up-to-date file.
 - **Code:** You can even create a state machine that not only updates its own state, but also updates the very state transition logic itself, implementing an “upgradeable” state machine powered by Bitcoin transactions.
@@ -766,8 +766,8 @@ This deserialized format is readable but still just one dimensional, therefore n
 
 We can use this object for various purposes.
 
-1. Store it in a document database as a row (Such as MongoDB)
-2. Filter it using JSON processing engiens (Such as JQ)
+1. Store it in a document database as a row (Such as MongoDB).
+2. Filter it using JSON processing engines (Such as JQ).
 
 In case of Planaria, this is the basic unit of transaction object that gets passed to `onmempool` and `onblock` handlers.
 
@@ -859,7 +859,7 @@ into this:
   "e": {
     "v": 459046,
     "i": 0,
-    "a": "qrlxs6um926cng7txd5dqgs3egdfhz92ggrzlp5vsy"
+    "a": "1QCBiyfwdjXDsHghBEr5U2KxUpM2BmmJVt"
   }
 }
 ```
@@ -868,20 +868,20 @@ Here's what each attribute means and how they're constructed:
 
 - **i:** The index of the current script within its parent transaction. One transaction can contain many input/outputs and all input/outputs are ordered within the transaction. This field describes the index of the current script input/output's index.
 - **b0, b1, b2, ... :** base64 encoded representation of each push data. There are two rules:
-  - **If a push data is an opcode,** it's stored as a JSON object with a single key "op" and its value which corresponds to Bitcoin opcode (Bitcoin opcode table) - (Example: `{ "b0": { "op": 106 } }` is an OP_RETURN opcode)
-  - **If a push data is a non-opcode,** it's stored as a base64 encoded string
+  - **If a push data is an opcode,** it's stored as a JSON object with a single key "op" and its value which corresponds to Bitcoin opcode (Bitcoin opcode table) - (Example: `{ "b0": { "op": 106 } }` is an OP_RETURN opcode).
+  - **If a push data is a non-opcode,** it's stored as a base64 encoded string.
 - **lb0, lb1, lb2, ...**: base64 encoded representation (Same as b0, b1, b2) BUT ONLY when the push data size is **larger than 512 bytes**. A pushdata is always stored as either a `b` variable or `lb` variable, depending on the size. [Learn more](https://medium.com/@_unwriter/l-is-for-large-6e632280c5e3)
 - **s0, s1, s2, ... :** UTF8 encoded representation of each push data. Used for full text search as well as simple string matching. Only stored if the push data is not an opcode.
 - **ls0, ls1, ls2, ...**: UTF8 encoded representation (Same as s0, s1, s2) BUT ONLY when the push data size is **larger than 512 bytes**. A pushdata is always stored as either a `s` variable or `ls` variable, depending on the size. [Learn more](https://medium.com/@_unwriter/l-is-for-large-6e632280c5e3)
-- **str**: Full string representation of the script
+- **str**: Full string representation of the script.
 - **e**: (for inputs) Stands for "graph edge". An array of previous outputs linking to the current transaction. More in the next section.
   - **h**: The hash of the transaction that contains the previous output.
   - **i**: The index of the previous output within its transaction output set.
-  - **a**: The sender address in case it can be parsed into an address
+  - **a**: The sender address in case it can be parsed into an address.
 - **e**: (for outputs) Stands for "graph edge". An array of all outgoing outputs from the current transaction. More in the next section.
-  - **v**: The amount of satoshis sent
-  - **i**: The output index within the transaction
-  - **a**: The receiver address if the output is linking to an address
+  - **v**: The amount of satoshis sent.
+  - **i**: The output index within the transaction.
+  - **a**: The receiver address if the output is linking to an address.
 
 
 
@@ -896,8 +896,8 @@ These represent the edges between transactions, one transaction linking to anoth
 ![graph](./planaria_graph.png)
 
 1. TX B (Transaction B) has 3 inputs and 1 output.
-2. The first input of 0.5 BSV comes from Bob
-3. If we take a look at the part where Bob sends 0.5 BSV to Alice (under "Bob spends") we can see that the 0.5 BSV to Alice is the first output in the transaction (index: 0)
+2. The first input of 0.5 BSV comes from Bob.
+3. If we take a look at the part where Bob sends 0.5 BSV to Alice (under "Bob spends") we can see that the 0.5 BSV to Alice is the first output in the transaction (index: 0).
 
 ```
 {
@@ -939,7 +939,7 @@ Note that 0.8 BSV equals to 80,000,000 satoshis, which is why v is 80,000,000. A
 
 ## Examples
 
-Let's take a look at some examples. 
+Let's take a look at some examples.
 
 Each example will demonstrate a new unique feature Planaria provides:
 
@@ -1011,10 +1011,10 @@ module.exports = {
 
 First some explanation on the metadata:
 
-- `from`: the Meta database crawls all the way from the genesis block, so the "from" is set to 0
+- `from`: the Meta database crawls all the way from the genesis block, so the "from" is set to 0.
 - `name`: This state machine will be published as the name "meta".
-- `version`: The state machine may go through multiple upgrades in the future. The current version is `0.0.3` (follows semantic versioning)
-- `description`: The description to publish to the planaria network
+- `version`: The state machine may go through multiple upgrades in the future. The current version is `0.0.3` (follows semantic versioning).
+- `description`: The description to publish to the planaria network.
 - `address`: The Bitcoin address tied to this state machine. Only the person who owns the private key to this address can publish to the Planaria network.
 - `index`: Describes which collections and which attributes to attach index to. In this case the DSL is saying:
 	- for the `block` collection, attach index to `hash`, `confirmations`, `size`, ... keys.
@@ -1149,7 +1149,7 @@ Planarium is the **interface through which the outside world can read Planaria**
 
 ### Syntax
 
-Every Planarium Service is a **Single node.js module object** that follows the following convention:
+Every Planarium Service is a **Single Node.js module object** that follows the following convention:
 
 ```
 module.exports = {
@@ -1193,7 +1193,7 @@ module.exports = {
 
 ### Virtual Attributes
 
-In this example, we will use a 3rd party NPM module named `timeago.js` to transform the response automatically before returning. 
+In this example, we will use a 3rd party NPM module named `timeago.js` to transform the response automatically before returning.
 
 Pay attention to the `transform.response` function: It takes an array (The raw response array) and transforms each item before returning.
 
@@ -1243,7 +1243,7 @@ module.exports = {
 }
 ```
 
-This is great for creating virtual attributes, but can be much more powerful for doing things like: Storing data without modification but returning a transformed result depending on the query
+This is great for creating virtual attributes, but can be much more powerful for doing things like: Storing data without modification but returning a transformed result depending on the query.
 
 
 ### Custom Routes
@@ -1326,8 +1326,8 @@ Many times you may want to **dive into the containers** to see what exactly is g
 
 With this you can do things like:
 
-1. Inspect the files inside to make sense of things
-2. Inspect the MongoDB and the entire file system like a normal shell connection
+1. Inspect the files inside to make sense of things.
+2. Inspect the MongoDB and the entire file system like a normal shell connection.
 
 Here's how:
 
@@ -1376,7 +1376,7 @@ docker exec -it dcb3241a81e0 bash
 
 ## Advanced Logging
 
-By default, the `pc logs write` and `pc logs read` starts **listening to the log** from the containers. However sometimes you may want more flexibility. You can directly use docker logs by figuring out the container ID [as explained above](#step-1-find-containers)
+By default, the `pc logs write` and `pc logs read` starts **listening to the log** from the containers. However sometimes you may want more flexibility. You can directly use docker logs by figuring out the container ID [as explained above](#step-1-find-containers).
 
 Once you figure out the container ID, you can run to many things:
 
@@ -1404,7 +1404,7 @@ docker logs [CONTAINER ID] --tail 100
 docker logs -f [CONTAINER ID] --tail 100
 ```
 
-> This is equivalent to "pc logs write 100" or "pc logs read 100"
+> This is equivalent to "pc logs write 100" or "pc logs read 100".
 
 
 ## Custom Environment Variables
@@ -1441,7 +1441,7 @@ Some attributes that you may want to change sometimes:
 - **BITCOIN_USER**: The JSON-RPC username. Must match the `rpcuser` attribute in `bitcoin.conf`.
 - **BITCOIN_PASSWORD**: The JSON-RPC password. Must match the `rpcpassword` attribute in `bitcoin.conf`.
 - **HOST**: Bitcoin HOST IP address. Used for Bitcoin ZeroMQ and Bitcoin JSON-RPC used by Planaria and Planarium.
-- **BITCOIN_PORT**: The Bitcoin JSON-RPC port. 
+- **BITCOIN_PORT**: The Bitcoin JSON-RPC port.
 - **PLANARIUM_PORT**: The Planarium HTTP API endpoint port. By default it's 3000.
 - **JOIN**: `true` for joining Planaria Network. `false` for not joining.
 
@@ -1449,13 +1449,13 @@ Some attributes that you may want to change sometimes:
 
 # Troubleshoot
 
-Something not working? Here are the steps you could take to diagnose the problem
+Something not working? Here are the steps you could take to diagnose the problem.
 
 ## How to check online containers
 
 Run `docker ps` to see the currently running Docker containers.
 
-In most cases it should return two. Should look something like this: 
+In most cases it should return two. Should look something like this:
 
 ```
 root@eul:~/euler# docker ps -a
@@ -1471,8 +1471,8 @@ If only one is running (in most of these cases it would be only `interplanaria/p
 
 As of the latest version of [Planaria Computer](/pc) you can view the logs of crashed containers.
 
-- If your Planaria container is not up, you can check the log with `pc logs write` to see what's going on
-- If your Planarium container is not up, you can check the log with `pc logs read` to see what's going on
+- If your Planaria container is not up, you can check the log with `pc logs write` to see what's going on.
+- If your Planarium container is not up, you can check the log with `pc logs read` to see what's going on.
 
 If Planaria is running, but Planarium is failing, it has to do with the API endpoint.
 
@@ -1527,11 +1527,11 @@ It's important to note that:
 
 ## Running Planarium behind a Proxy
 
-There are a couple of things to keep in mind when you run your Planarium API endpoint behind Nginx, Apache, etc. 
+There are a couple of things to keep in mind when you run your Planarium API endpoint behind Nginx, Apache, etc.
 
 
 
-- **SSE Settings:** Bitsocket (Server Sent Events) connections may time out if you don't have the proper settings. [Read more](https://www.electrollama.net/blog/2017/6/22/html-sse-with-nodejs-and-nginx)
+- **SSE Settings:** Bitsocket (Server Sent Events) connections may time out if you don't have the proper settings. [Read more](https://www.electrollama.net/blog/2017/6/22/html-sse-with-Node.js-and-nginx)
 - **Long URL Support:** The query endpoint is based on base64 encoded query string, and sometimes the query string may be very large, resulting in failures. You may want to set the `client_header_buffer_size` and `large_client_header_buffers` attributes.
 
 Here's an example setting for an Nginx `/etc/nginx/sites-enabled/eul.bitdb.network`.

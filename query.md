@@ -15,7 +15,7 @@ Bitquery is a combination of two query languages:
 
 Every bitquery consists of 3 top level attributes:
 
-1. **v:** is for "version". (The current version is '3')
+1. **v:** is for "version". (The current version is '3'.)
 2. **q:** is for "query".
     - **find:** MongoDB query filter object. [Learn more about MongoDB find command](https://docs.mongodb.com/manual/reference/method/db.collection.find/)
     - **aggregate:** MongoDB aggregationg pipeline stages array. [Learn more about Mongodb aggregate stages](https://docs.mongodb.com/manual/reference/method/db.collection.aggregate/#db.collection.aggregate)
@@ -168,14 +168,14 @@ Let's zoom in to the response processor function `r.f`:
 "[.[] | .out[0] | { token_symbol: .s4, token_name: .s5, document_url: .s6} ]"
 ```
 
-This is written in [jq](https://en.wikipedia.org/wiki/Jq_(programming_language)), a Turing complete data processing language. 
+This is written in [jq](https://en.wikipedia.org/wiki/Jq_(programming_language)), a Turing complete data processing language.
 
 ![jq](jq.png)
 
 And here's how to read the program:
 
-1. All jq programs are stack based, therefore you read from left to right
-2. All jq programs assume an incoming input object and produces an output in the end
+1. All jq programs are stack based, therefore you read from left to right.
+2. All jq programs assume an incoming input object and produces an output in the end.
 3. The `|` (pipe) works like [unix pipes](https://en.wikipedia.org/wiki/Pipeline_(Unix)). It passes the computed output from the left side as input to the right.
 
 So following these rules (learn more about the syntax [here](https://stedolan.github.io/jq/manual/#Basicfilters)), here's what the code says:
@@ -230,7 +230,7 @@ And here's the result:
 
 Notice how instead of returning all the raw attributes straight from the DB, the API now returns the response in the **EXACT format you want**:
 
-As you can see, this effectively closes the loop in the entire query lifecycle by letting you create a query that describes **NOT only the request, but also the response**, which means a query is completely self-contained for instant usage. 
+As you can see, this effectively closes the loop in the entire query lifecycle by letting you create a query that describes **NOT only the request, but also the response**, which means a query is completely self-contained for instant usage.
 
 > When we end up with a query language that is 100% self-contained for instant usage,
 >
@@ -256,8 +256,8 @@ Here are the benefits:
 
 1. **Powerful:** jq is Turing complete, meaning you can transform any JSON into any format you want. Using the stack based paradigm, jq provides full range of programming capabilities such as: loops, map, filter, variable assignment, etc.
 2. **Efficient:** It offloads the work from the database by doing all the filtering outside of the DB engine AFTER the DB responds, but BEFORE the result is sent back to the client. This makes the query much more performant.
-3. **Portable:** Most importantly, the language fits into JSON format since jq is a single line programming language (stack based). 
-4. **Programmable:** jq has been a popular language of choice for manipulating data in the command line interface. People use it along with other programs on their computer through the power of [unix piping](https://en.wikipedia.org/wiki/Pipeline_(Unix)), which makes it infinitely extensible and programmable. 
+3. **Portable:** Most importantly, the language fits into JSON format since jq is a single line programming language (stack based).
+4. **Programmable:** jq has been a popular language of choice for manipulating data in the command line interface. People use it along with other programs on their computer through the power of [unix piping](https://en.wikipedia.org/wiki/Pipeline_(Unix)), which makes it infinitely extensible and programmable.
 
 ### Create a meta API!
 
@@ -280,7 +280,7 @@ Now that it's possible to include the processing logic directly inside the query
 
 More complex example, also using [Genesis](https://planaria.network/@1FnauZ9aUH2Bex6JzdcV4eNX7oLSSEbxtN):
 
-1. Find 100 OP_RETURN transactions that start witn `0x6d02` (memo.cash)
+1. Find 100 OP_RETURN transactions that start with `0x6d02` (memo.cash)
 2. Group by block index (blk.i)
 3. Map the items to only return the message (.out[1].s2) and transaction hash (.tx.h)
 
@@ -333,7 +333,7 @@ fetch(url, header).then(function(r) {
 
 ## Socket
 
-For Socket, it uses SSE (Server Sent Events). 
+For Socket, it uses SSE (Server Sent Events).
 
 You subscribe with the same Bitquery, and it will send you notifications when there's a new item that matches the pattern.
 

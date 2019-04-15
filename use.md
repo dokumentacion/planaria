@@ -4,7 +4,7 @@
 
 Bitcoin has been around for a decade, yet we have very small variety of "Explorer" services that lets people make sense of the blockchain. This is because these "explorers" were built with a very narrow use case in mind.
 
-Planaria sees Bitcoin as a computer, and was designed to complement this vision.
+Planaria sees **Bitcoin as a computer**, and was designed to complement this vision.
 
 With Planaria, you can build your own custom **"block explorer"** that functions whichever way you want.
 
@@ -20,7 +20,7 @@ One cool use case is a forensic database for detecting anomaly or potentially ma
 
 ## Analytics Database
 
-You can build a separate standalone analytics database for application usage, protocol usage, transaction pattern usage, etc. This database can run independent from whoever is actually running the application.
+You can build a separate standalone analytics database for application usage, protocol usage, transaction pattern usage, etc. This database can run independently from whoever is actually running the application.
 
 ## Prunable Database
 
@@ -34,7 +34,7 @@ You can build a database that updates itself over time.
 
 Remember, Planaria is essentially a development framework that lets you build any kind of state machine from Bitcoin.
 
-This means you can recreate any existing real-world application, but instead of using the traditional cloud model, use Bitcoin.
+This means you can recreate any existing real-world application, but instead of using the traditional cloud model, now you use Bitcoin.
 
 ## Long-tail Applications
 
@@ -46,7 +46,7 @@ This is possible because Planaria acts as the "filter". Filtering and Transformi
 
 ## Portable Applications
 
-When you store your app on Bitcoin, you effectively have an app that can fork or evolve while preserving the state. This is simple because all you need to do to fork an app is take the Planaria code, make a few modifications, and deploy it. Then get people to join your fork.
+When you store your app on Bitcoin, you effectively have an app that can fork or evolve while preserving the state. This is simple because all you need to do to fork an app is to take the Planaria code, make a few modifications, and deploy it. Then get people to join your fork.
 
 This can be used to implement:
 
@@ -87,7 +87,7 @@ This includes examples such as:
 
 ## Bitcoin as IPC (Inter Process Calls)
 
-You can also use Bitcoin purely as an event to trigger ANY application you write in JavaScript.
+You can also use Bitcoin purely as an event to trigger **ANY** application you write in JavaScript.
 
 For example, you can write a program that automatically sends out email or SMS, or sends a Tweet whenever there's a certain pattern of incoming Bitcoin event.
 
@@ -99,11 +99,11 @@ You can even implement **"transparent private computing"**.
 
 Just because everything is transparent doesn't mean everything must be public. Through various clever tricks you can build an "encrypted application". Here's an example:
 
-1. Build a Planaria Node
+1. Build a Planaria Node.
 2. Use encryption in certain parts of the code for the Planaria node.
 3. Publish the code publicly, but share the keys only with the stakeholders.
 
-The benefit of this approach is that it takes the best of both worlds (Transparent computing powered by Bitcoin + private computing powered by Encryption)
+The benefit of this approach is that it takes the best of both worlds (Transparent computing powered by Bitcoin + private computing powered by Encryption).
 
 1. **Auditable:** The "log" is transparent so the entire state transition history can be audited later if needed.
 2. **Private:** While the log is transparent, thanks to the encryption, nobody outside of the stakeholders group can see what the events in the log mean. It can only be interpreted by the stakeholders who hold the decryption keys.

@@ -26,7 +26,7 @@ Planaria lets you express all of the above as a single portable JavaScript objec
 
 ![anatomy](anatomy.png)
 
-Every Planaria state machine is a **SINGLE node.js module object** that follows the following convention:
+Every Planaria state machine is a **SINGLE Node.js module object** that follows the following convention:
 
 ```
 module.exports = {
