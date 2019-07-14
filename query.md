@@ -273,7 +273,7 @@ Now that it's possible to include the processing logic directly inside the query
     "limit": 100
   },
   "r": {
-    "f": "[{ block: .blk.i?, timestamp: .blk.t?, content: .out[1].s2 }]"
+    "f": "[.[] | { block: .blk.i?, timestamp: .blk.t?, content: .out[1].s2 }]"
   }
 }
 ```
