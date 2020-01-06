@@ -270,10 +270,28 @@ Now that it's possible to include the processing logic directly inside the query
   "v": 3,
   "q": {
     "find": { "out.h1": "6d02" },
+    "limit": 100,
+    "sort": {"blk.i": 1}
+  },
+  "r": {
+    "f": "[.[] | { block: .blk.i?, timestamp: .blk.t?, content: .out[1].s2 }]"
+  }
+}
+```
+
+By the MongoDB query `"q"`, the first 100 transactions of Memo posts are returned. After filtered by the response processing function `r.f`, only the fileds of block index, block time and the 3rd push data `s2` of the 2nd output `.out[1]` are returned. 
+
+However, the Memeo post is not necessarily inclueded in the 2nd output of a transaction. Furthermore, after the [Genisis upgrade](https://github.com/bitcoin-sv-specs/protocol/blob/master/updates/genesis-spec.md) of BSV at Feb 4th 2020, one transaction can have multiple outputs containing the OP_RETRUN code and subsequent data, which could all be Memo posts. So, a more robust query may be:
+
+```
+{
+  "v": 3,
+  "q": {
+    "find": { "out.h1": "6d02" },
     "limit": 100
   },
   "r": {
-    "f": "[{ block: .blk.i?, timestamp: .blk.t?, content: .out[1].s2 }]"
+    "f": "[.[] | { block: .blk.i?, timestamp: .blk.t?, content: [.out |.[] |if .h1==\"6d02\" then .s2 else empty end] | .[] }]"
   }
 }
 ```
@@ -290,7 +308,8 @@ More complex example, also using [Genesis](https://planaria.network/@1FnauZ9aUH2
   "q": {
     "db": ["c"],
     "find": { "out.h1": "6d02" },
-    "limit": 100
+    "limit": 100,
+    "sort": {"blk.i":1}
   },
   "r": {
     "f": "[ group_by(.blk.h)[] | { blocks: { (.[0].blk.i | tostring): [.[] | {message: .out[1].s2, tx: .tx.h} ] } } ]"
