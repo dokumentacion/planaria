@@ -308,7 +308,8 @@ More complex example, also using [Genesis](https://planaria.network/@1FnauZ9aUH2
   "q": {
     "db": ["c"],
     "find": { "out.h1": "6d02" },
-    "limit": 100
+    "limit": 100,
+    "sort": {"blk.i":1}
   },
   "r": {
     "f": "[ group_by(.blk.h)[] | { blocks: { (.[0].blk.i | tostring): [.[] | {message: .out[1].s2, tx: .tx.h} ] } } ]"
